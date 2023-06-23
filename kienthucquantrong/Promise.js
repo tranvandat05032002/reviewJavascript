@@ -112,7 +112,7 @@ handleHello
   });
 // 1 ứng dụng k có catch thì sẽ dẫn đến crash ứng dụng
 Promise.reject("hello")
-// bor then và catch --> crash
+  // bor then và catch --> crash
   .then((res) => {
     console.log(res);
   })
@@ -120,3 +120,5 @@ Promise.reject("hello")
     console.log(error);
   });
 console.log("hello");
+
+// notes: khi catch thì tuyệt đối k đc resolve sau khi catch vì catch xong nó nhảy vào .then
