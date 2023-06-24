@@ -97,3 +97,19 @@ class Person {
     this.name = name;
   }
 }
+// build state
+const simpleState = (
+  value: string
+): [() => string, (preValue: string) => void] => {
+  return [
+    () => value,
+    (preValue) => {
+      return (value = preValue);
+    },
+  ];
+};
+const [state, setState] = simpleState("TranVanDat");
+console.log(state());
+setState("Dat");
+console.log(state());
+// Generics function
