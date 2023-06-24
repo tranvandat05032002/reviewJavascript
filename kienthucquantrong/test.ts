@@ -77,3 +77,23 @@ enum statusPort {
   SUCCESS = 200,
 }
 const errorCode: number = statusPort.ERROR;
+
+// class
+class Person {
+  private name: string;
+  private age: number;
+  private birthDay: string;
+  private permission: string;
+  constructor(name: string, age: number, birthDay: string, permission: string) {
+    this.name = name;
+    this.age = age;
+    this.birthDay = birthDay;
+    this.permission = permission;
+  }
+  public getName(): string {
+    return this.name;
+  }
+  public setName(name: string): void {
+    this.name = name;
+  }
+}
