@@ -113,3 +113,102 @@ console.log(state());
 setState("Dat");
 console.log(state());
 // Generics function
+//Dang 1:
+const simpleStateMulType = <T>(value: T): [() => T, (preValue: T) => void] => {
+  return [
+    () => value,
+    (preValue: T) => {
+      return (value = preValue);
+    },
+  ];
+};
+
+const [value1, setValue1] = simpleStateMulType(100);
+// 100
+setValue1(256);
+console.log(value1());
+const [value2, setValue2] = simpleStateMulType("Terrible");
+setValue2("penguin");
+console.log(value2());
+// Dang 2
+interface IRankType<IRN> {
+  item: IRN;
+  handleRank: number;
+}
+function ranker<RN>(items: RN[], rank: (item: RN) => number): RN[] {
+  const ranks: IRankType<RN>[] = items.map((item) => ({
+    item,
+    handleRank: rank(item),
+  }));
+  ranks.sort((a, b) => a.handleRank - b.handleRank);
+  return ranks.map((rank) => rank.item);
+}
+
+console.log(ranker([5, 3, 2, 4, 1], (n) => n * 5));
+const language: { name: string; difficult: number }[] = [
+  {
+    name: "JS",
+    difficult: 60,
+  },
+  {
+    name: "ReactJS",
+    difficult: 80,
+  },
+  {
+    name: "JQuery",
+    difficult: 40,
+  },
+];
+const sortRanker = ranker(language, (n) => n.difficult);
+console.log(sortRanker);
+
+type user = {
+  name: string;
+  age: number;
+};
+// generics with arrow function
+// const identity = <Type>(value: Type) => value;
+// generics with function
+function identity<Type>(value: Type) {
+  return value;
+}
+interface Identity<Type> {
+  (value: Type): Type;
+}
+const myIdentity: Identity<number> = identity;
+const result = identity<user>({ name: "Tran Van Dat", age: 21 });
+// Ràng buộc trong Generic keyword : Extends
+
+interface Animal {
+  name: string;
+}
+const logAnimal = <T extends Animal>(value: T): T => {
+  console.log(value.name);
+  return value;
+};
+logAnimal({ name: "penguin" });
+
+// Keyof of object
+// get value for key
+const getValue = <Obj, Key extends keyof Obj>(obj: Obj, key: Key) => {
+  return obj[key];
+};
+console.log(getValue({ name: "tranvandat", age: 21 }, "age"));
+//Default generic
+function getNumber<T = number>(value: T): T {
+  return value;
+}
+console.log(getNumber(12));
+
+interface Box<Type = string> {
+  value: Type;
+}
+const box: Box = {
+  value: "Tran van dat",
+};
+console.log(box);
+// union
+function testGeneric<Type>(value: Type): Type {
+  return value;
+}
+console.log(testGeneric<number | string>(1));
